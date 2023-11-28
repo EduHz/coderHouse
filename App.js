@@ -1,42 +1,54 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, ImageBackground } from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, View, TextInput, Button } from "react-native";
 
 export default function App() {
+  const [inputVacio, setInputVacio] = useState("");
+  const [listaItems, setListaItems] = useState([]);
+
+  const handleInputChange = (text) => {
+    setInputVacio(text);
+  };
+
+  const handleAddButtonPress = () => {
+    if (inputVacio !== "") {
+      setListaItems([...listaItems, inputVacio]);
+      setInputVacio("");
+    }
+  };
+
   return (
-    <ImageBackground
-      source={require("./assets/texture.jpg")}
-      style={styles.container}
-    >
-      <Text style={styles.firstText}>Hola Coder!</Text>
-      <Text style={styles.secondText}>
-        Welcome to your first App Eduardo :)
-      </Text>
-      <StatusBar style="auto" />
-    </ImageBackground>
+    <View style={styles.firstView}>
+      <View style={styles.container}>
+        <TextInput
+          style={styles.firstTextInput}
+          placeholder="enter service"
+          value={inputVacio}
+          onChangeText={handleInputChange}
+        />
+        <Button title="ADD" onPress={handleAddButtonPress} />
+      </View>
+      <View>
+        {listaItems.map((item, index) => (
+          <Text key={index}>{item}</Text>
+        ))}
+      </View>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  firstView: {
+    padding: 30,
+  },
   container: {
-    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
     alignItems: "center",
-    justifyContent: "center",
+    backgroundColor: "white",
   },
-  firstText: {
-    color: "white",
-    fontSize: 35,
-    fontWeight: "bold",
-    textShadowColor: "rgba(0, 0, 0, 0.75)",
-    textShadowOffset: { width: -1, height: 1 },
-    textShadowRadius: 10,
-    marginBottom: 10,
-  },
-  secondText: {
-    color: "yellow",
-    fontSize: 18,
-    textAlign: "center",
-    textShadowColor: "rgba(0, 0, 0, 0.75)",
-    textShadowOffset: { width: -2, height: 2 },
-    textShadowRadius: 10,
+  firstTextInput: {
+    borderBottomColor: "black",
+    width: 200,
+    borderBottomWidth: 1,
   },
 });
