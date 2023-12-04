@@ -2,20 +2,18 @@ import React, { useState } from "react";
 import { View, TextInput, Button, StyleSheet, Text } from "react-native";
 
 const App = () => {
-  const [list, setList] = useState("");
+  const [textItem, setTextItem] = useState("");
+  const [itemList, setItemList] = useState([]);
 
   return (
     <View style={styles.container}>
       <View style={styles.inputAdd}>
         <TextInput style={styles.input} placeholder="Ingrese Item" />
-        <Button title="Add" onPress={() => console.log("Botón presionado")} />
+        <Button title="Add" onPress={() => setTextItem(textItem)} />
       </View>
       <View style={styles.inputList}>
-        <Text>Item 1</Text>
-        <Button
-          title="Delete"
-          onPress={() => console.log("Botón presionado")}
-        />
+        <Text>texto 1</Text>
+        <Button title="Delete" onPress={() => console.log("Botón Delete")} />
       </View>
     </View>
   );
