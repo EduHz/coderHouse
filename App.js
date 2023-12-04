@@ -1,54 +1,55 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
+import { View, TextInput, Button, StyleSheet, Text } from "react-native";
 
-export default function App() {
-  const [inputVacio, setInputVacio] = useState("");
-  const [listaItems, setListaItems] = useState([]);
-
-  const handleInputChange = (text) => {
-    setInputVacio(text);
-  };
-
-  const handleAddButtonPress = () => {
-    if (inputVacio !== "") {
-      setListaItems([...listaItems, inputVacio]);
-      setInputVacio("");
-    }
-  };
+const App = () => {
+  const [list, setList] = useState("");
 
   return (
-    <View style={styles.firstView}>
-      <View style={styles.container}>
-        <TextInput
-          style={styles.firstTextInput}
-          placeholder="enter service"
-          value={inputVacio}
-          onChangeText={handleInputChange}
-        />
-        <Button title="ADD" onPress={handleAddButtonPress} />
+    <View style={styles.container}>
+      <View style={styles.inputAdd}>
+        <TextInput style={styles.input} placeholder="Ingrese Item" />
+        <Button title="Add" onPress={() => console.log("Botón presionado")} />
       </View>
-      <View>
-        {listaItems.map((item, index) => (
-          <Text key={index}>{item}</Text>
-        ))}
+      <View style={styles.inputList}>
+        <Text>Item 1</Text>
+        <Button
+          title="Delete"
+          onPress={() => console.log("Botón presionado")}
+        />
       </View>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
-  firstView: {
-    padding: 30,
-  },
   container: {
-    flexDirection: "row",
-    justifyContent: "space-between",
+    flex: 1,
+    paddingTop: 40,
+    justifyContent: "start-end",
     alignItems: "center",
-    backgroundColor: "white",
   },
-  firstTextInput: {
-    borderBottomColor: "black",
-    width: 200,
-    borderBottomWidth: 1,
+  inputAdd: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    paddingVertical: 20,
+    width: "100%",
+  },
+  inputList: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 20,
+    width: "100%",
+  },
+  input: {
+    flex: 1,
+    marginRight: 10,
+    height: 40,
+    borderWidth: 1,
+    paddingHorizontal: 10,
   },
 });
+
+export default App;
