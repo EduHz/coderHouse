@@ -1,42 +1,41 @@
-import { useState } from "react";
-import { Button, StyleSheet, TextInput, View } from "react-native-web";
+import React, { useState } from "react";
+import { View, TextInput, Button, StyleSheet } from "react-native";
 
-const AddItem = ({ onSubmit }) => {
-  const [item, setItem] = useState("");
+const AddItem = ({ addItem }) => {
+  const [text, setText] = useState("");
 
-  const handleSubmit = () => {
-    if (item.trim() !== "") {
-      onSubmit(item);
-      setItem("");
+  const handleAddItem = () => {
+    if (text.trim() !== "") {
+      addItem(text);
+      setText("");
     }
   };
 
   return (
-    <View style={styles.inputContainer}>
+    <View style={styles.container}>
       <TextInput
         style={styles.input}
-        placeholder="Add item..."
-        value={item}
-        onChangeText={(text) => setItem(text)}
+        placeholder="Add an item..."
+        value={text}
+        onChangeText={(value) => setText(value)}
       />
-      <Button title="Add" onPress={handleSubmit} />
+      <Button title="Add" onPress={handleAddItem} />
     </View>
   );
 };
 
-export default AddItem;
-
 const styles = StyleSheet.create({
-  inputContainer: {
+  container: {
     flexDirection: "row",
-    marginBottom: 10,
-    marginTop: 20,
+    marginBottom: 16,
   },
   input: {
     flex: 1,
-    height: 40,
-    borderColor: "gray",
+    marginRight: 8,
     borderWidth: 1,
-    marginRight: 10,
+    borderColor: "#ccc",
+    padding: 8,
   },
 });
+
+export default AddItem;
