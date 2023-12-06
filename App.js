@@ -1,21 +1,19 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Button } from "react-native";
+import { View, Modal, StyleSheet } from "react-native";
+import AddItem from "./components/AddItem";
+import DeleteModal from "./components/DeleteModal";
+import ListItems from "./components/lista/ListItems";
 
 export default function App() {
-  const [item, setItem] = useState("");
   const [list, setList] = useState([]);
+  const [deleteIndex, setDeleteIndex] = useState(null);
 
-  console.log(list.map((x) => x));
-
-  const handleSubmit = () => {
-    setList([...list, { text: item, checked: false }]);
-    setItem("");
+  const handleAddItem = (newItem) => {
+    setList([...list, { text: newItem, checked: false }]);
   };
 
   const handleDelete = (index) => {
-    const newList = [...list];
-    newList.splice(index, 1);
-    setList(newList);
+    setDeleteIndex(index);
   };
 
   const handleCheck = (index) => {
@@ -24,29 +22,38 @@ export default function App() {
     setList(newList);
   };
 
+  const confirmDelete = () => {
+    const newList = [...list];
+    newList.splice(deleteIndex, 1);
+    setList(newList);
+    setDeleteIndex(null);
+  };
+
+  const cancelDelete = () => {
+    setDeleteIndex(null);
+  };
+
   return (
-    <View>
-      <Text>Primera Lista Sin Ayudas</Text>
-      <View>
-        <TextInput
-          style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-          placeholder="Add item..."
-          value={item}
-          onChangeText={(text) => setItem(text)}
+    <View style={styles.container}>
+      <AddItem onSubmit={handleAddItem} />
+      <ListItems
+        list={list}
+        handleDelete={handleDelete}
+        handleCheck={handleCheck}
+      />
+      <Modal visible={deleteIndex !== null} animationType="slide">
+        <DeleteModal
+          confirmDelete={confirmDelete}
+          cancelDelete={cancelDelete}
         />
-        <Button title="Add" onPress={handleSubmit} />
-      </View>
-      {list.map((item, index) => (
-        <View key={index}>
-          <Text
-            style={item.checked ? { textDecorationLine: "line-through" } : {}}
-          >
-            {item.text}
-          </Text>
-          <Button title="Delete" onPress={() => handleDelete(index)} />
-          <Button title="Check" onPress={() => handleCheck(index)} />
-        </View>
-      ))}
+      </Modal>
     </View>
   );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: 20,
+  },
+});
