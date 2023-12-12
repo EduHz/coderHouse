@@ -1,42 +1,41 @@
-import React, { useState } from "react";
-import { SafeAreaView, StyleSheet, FlatList } from "react-native";
-import AddItem from "./components/AddItem";
-import Item from "./components/lista/Item";
+import { StyleSheet, View } from 'react-native'
+import Home from './src/Screens/Home'
+import ItemListCategories from './src/Screens/ItemListCategories'
+import ItemDetail from './src/Screens/ItemDetail'
+import { useState } from 'react'
+import { useFonts } from "expo-font"
 
-export default function App() {
-  const [items, setItems] = useState([]);
-  const addItem = (text) => {
-    setItems([...items, { id: Date.now().toString(), text, checked: false }]);
-  };
-  const toggleCheck = (id) => {
-    setItems(
-      items.map((item) =>
-        item.id === id ? { ...item, checked: !item.checked } : item
-      )
-    );
-  };
-  const deleteItem = (id) => {
-    setItems(items.filter((item) => item.id !== id));
-  };
+const  App = () => {
+  const [categorySelected,setCategorySelected] = useState("")
+  
+  const [fontLoaded] = useFonts({
+    Josefin:require("./assets/Fonts/JosefinSans-Bold.ttf")
+  })
 
+  if(!fontLoaded) return null
+
+  
   return (
-    <SafeAreaView style={styles.container}>
-      <AddItem addItem={addItem} />
-      <FlatList
-        data={items}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <Item item={item} toggleCheck={toggleCheck} deleteItem={deleteItem} />
-        )}
-      />
-    </SafeAreaView>
-  );
+    <View style={styles.container}>
+      {categorySelected ?
+        <ItemListCategories category = {categorySelected}/>
+        :
+        <Home setCategorySelected={setCategorySelected}/>
+      }
+     
+    </View>
+  )
 }
+
+export default App
+
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 16,
-    paddingTop: 60,
+    backgroundColor: '#fff',
+    alignItems: 'center',
+    justifyContent: 'start',
   },
-});
+})
+
