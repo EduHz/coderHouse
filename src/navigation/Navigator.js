@@ -11,10 +11,10 @@ const Stack = createNativeStackNavigator();
 const getScreenOptions = ({ route }) => {
   const title =
     route.name === "Home"
-      ? "Categorias"
+      ? "Categories"
       : route.name === "Category"
       ? route.params.category
-      : "Detalle";
+      : "Detail";
 
   return {
     header: () => <Header title={title} />,

@@ -26,7 +26,7 @@ const Search = ({ setKeyword }) => {
       <View style={styles.containerInput}>
         <TextInput
           style={styles.input}
-          placeholder="Buscar producto"
+          placeholder="Search product..."
           value={input}
           onChangeText={(t) => setInput(t)}
         />
@@ -46,7 +46,7 @@ export default Search;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.green1,
+    backgroundColor: colors.blue2,
     width: "100%",
   },
   containerInput: {
@@ -56,7 +56,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   input: {
-    backgroundColor: colors.green2,
+    backgroundColor: colors.white1,
     flex: 1,
     borderWidth: 2,
     borderRadius: 5,
