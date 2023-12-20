@@ -1,20 +1,20 @@
-import React from "react";
 import {
   StyleSheet,
   Text,
+  View,
   Image,
   useWindowDimensions,
   Pressable,
 } from "react-native";
 import { colors } from "../Global/colors";
 
-const ProductItem = ({ item, setProductDetailId }) => {
+const ProductItem = ({ item, navigation }) => {
   const { width } = useWindowDimensions();
 
   return (
     <Pressable
       style={styles.container}
-      onPress={() => setProductDetailId(item.id)}
+      onPress={() => navigation.navigate("Product", { id: item.id })}
     >
       <Text style={width > 350 ? styles.text : styles.textMin}>
         {item.title}
@@ -27,6 +27,8 @@ const ProductItem = ({ item, setProductDetailId }) => {
     </Pressable>
   );
 };
+
+export default ProductItem;
 
 const styles = StyleSheet.create({
   container: {
@@ -41,6 +43,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
+    gap: 30,
   },
   text: {
     width: "60%",
@@ -53,9 +56,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   image: {
+    minWidth: 90,
     height: 90,
     width: "30%",
   },
 });
-
-export default ProductItem;

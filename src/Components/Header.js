@@ -1,16 +1,15 @@
-import { StyleSheet, Text, View, useWindowDimensions } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { colors } from "../Global/colors";
 
 const Header = ({ title = "Producto" }) => {
-  const { width, height } = useWindowDimensions();
-  const landscape = width > height;
-
   return (
-    <View style={landscape ? styles.containerLandscape : styles.container}>
+    <View style={styles.container}>
       <Text style={styles.text}>{title}</Text>
     </View>
   );
 };
+
+export default Header;
 
 const styles = StyleSheet.create({
   container: {
@@ -20,17 +19,8 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  containerLandscape: {
-    backgroundColor: colors.green1,
-    width: "100%",
-    height: 40,
-    justifyContent: "center",
-    alignItems: "center",
-  },
   text: {
     fontSize: 20,
     fontFamily: "Josefin",
   },
 });
-
-export default Header;

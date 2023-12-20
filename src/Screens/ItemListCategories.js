@@ -1,74 +1,49 @@
 import React, { useEffect, useState } from "react";
-import {
-  Button,
-  FlatList,
-  Pressable,
-  StyleSheet,
-  Text,
-  TextInput,
-  View,
-} from "react-native";
-import Header from "../Components/Header";
+import { FlatList, StyleSheet } from "react-native";
 import Search from "../Components/Search";
 import allProducts from "../Data/products.json";
 import ProductItem from "../Components/ProductItem";
-import { colors } from "../Global/colors";
 
-const ItemListCategories = ({
-  category,
-  setCategorySelected,
-  setProductDetailId,
-}) => {
-  const [searchKeyword, setSearchKeyword] = useState("");
-  const [products, setProducts] = useState([]);
+const ItemListCategories = ({ navigation, route }) => {
+  const { category } = route.params;
+  const [keyword, setKeyword] = useState("");
+  const [products, setProducts] = useState(allProducts);
 
   useEffect(() => {
-    const filteredProducts = allProducts.filter((product) => {
-      if (category && product.category !== category) {
-        return false;
-      }
-      if (!product.title.includes(searchKeyword)) {
-        return false;
-      }
-      return true;
-    });
+    const filterProducts = () => {
+      const filteredByCategory = category
+        ? allProducts.filter((product) => product.category === category)
+        : allProducts;
 
-    setProducts(filteredProducts);
-  }, [category, searchKeyword]);
+      const filteredByName = filteredByCategory.filter((product) =>
+        product.title.toLowerCase().includes(keyword.toLowerCase())
+      );
 
-  const handleGoBack = () => {
-    setCategorySelected("");
-  };
+      setProducts(filteredByName);
+    };
+
+    filterProducts();
+  }, [category, keyword]);
 
   return (
     <>
-      <Header />
-      <Search setKeyword={setSearchKeyword} />
-      <Pressable style={styles.goBack} onPress={handleGoBack}>
-        <Text>Volver</Text>
-      </Pressable>
+      <Search setKeyword={setKeyword} />
       <FlatList
         style={styles.container}
         data={products}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
-          <ProductItem item={item} setProductDetailId={setProductDetailId} />
+          <ProductItem item={item} navigation={navigation} route={route} />
         )}
       />
     </>
   );
 };
 
+export default ItemListCategories;
+
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
-  },
-  goBack: {
-    width: "100%",
-    backgroundColor: colors.green1,
-    padding: 10,
-    paddingStart: 40,
+    flex: 1,
   },
 });
-
-export default ItemListCategories;

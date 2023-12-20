@@ -1,7 +1,7 @@
-import React, { useState } from "react";
 import { StyleSheet, View, Pressable, TextInput, Text } from "react-native";
-import { AntDesign, Entypo } from "@expo/vector-icons";
 import { colors } from "../Global/colors";
+import { AntDesign, Entypo } from "@expo/vector-icons";
+import { useState } from "react";
 
 const Search = ({ setKeyword }) => {
   const [input, setInput] = useState("");
@@ -10,7 +10,7 @@ const Search = ({ setKeyword }) => {
   const search = () => {
     const expression = /.*[0-9].*/;
     if (expression.test(input)) {
-      setError("El campo no debe contener números");
+      setError("no debe contener numeros");
     } else {
       setKeyword(input);
     }
@@ -28,7 +28,7 @@ const Search = ({ setKeyword }) => {
           style={styles.input}
           placeholder="Buscar producto"
           value={input}
-          onChangeText={(text) => setInput(text)}
+          onChangeText={(t) => setInput(t)}
         />
         <Pressable onPress={search}>
           <AntDesign name="search1" color="black" size={25} />
@@ -37,10 +37,12 @@ const Search = ({ setKeyword }) => {
           <Entypo name="circle-with-cross" color="black" size={25} />
         </Pressable>
       </View>
-      {error ? <Text style={styles.errorText}>{error}</Text> : null}
+      {error && <Text style={styles.errorInput}>{error}</Text>}
     </View>
   );
 };
+
+export default Search;
 
 const styles = StyleSheet.create({
   container: {
@@ -55,17 +57,15 @@ const styles = StyleSheet.create({
   },
   input: {
     backgroundColor: colors.green2,
-    width: "75%",
+    flex: 1,
     borderWidth: 2,
     borderRadius: 5,
     paddingHorizontal: 10,
     paddingVertical: 5,
     margin: 10,
   },
-  errorText: {
+  errorInput: {
     color: "red",
     paddingHorizontal: 10,
   },
 });
-
-export default Search;

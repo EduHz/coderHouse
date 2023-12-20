@@ -3,25 +3,26 @@ import { FlatList, StyleSheet } from "react-native";
 import categories from "../Data/categories.json";
 import CategoryItem from "./CategoryItem";
 
-const Categories = ({ setCategorySelected }) => {
-  const renderCategoryItem = ({ item }) => (
-    <CategoryItem setCategorySelected={setCategorySelected} category={item} />
-  );
+const Categories = ({ navigation, route }) => {
+  const renderItem = ({ item }) => {
+    return (
+      <CategoryItem category={item} navigation={navigation} route={route} />
+    );
+  };
 
   return (
     <FlatList
       style={styles.container}
       data={categories}
-      keyExtractor={(item, index) => `${item}_${index}`}
-      renderItem={renderCategoryItem}
+      renderItem={renderItem}
     />
   );
 };
+
+export default Categories;
 
 const styles = StyleSheet.create({
   container: {
     width: "100%",
   },
 });
-
-export default Categories;
