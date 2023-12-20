@@ -1,19 +1,16 @@
-import { StyleSheet } from 'react-native'
-import Header from '../Components/Header'
-import Categories from '../Components/Categories'
+import { StyleSheet } from "react-native";
+import Categories from "../Components/Categories";
+import Cabezera from "../Components/Cabezera";
 
-const Home = () => {
-  
+const Home = ({ setCategorySelected }) => {
   return (
-        <>
-            <Header title='Categories'/>
-            <Categories/>
-        </>
-  )
-}
+    <>
+      <Cabezera title="Categories" />
+      <Categories setCategorySelected={setCategorySelected} />
+    </>
+  );
+};
 
-export default Home
+export default Home;
 
-const styles = StyleSheet.create({
-
-})
+const styles = StyleSheet.create({});
