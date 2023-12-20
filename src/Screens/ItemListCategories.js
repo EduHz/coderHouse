@@ -1,50 +1,73 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, View, FlatList } from "react-native";
-import allProducts from "../Data/products.json";
-import Cabezera from "../Components/Cabezera";
+import {
+  Button,
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  TextInput,
+  View,
+} from "react-native";
+import Header from "../Components/Header";
 import Search from "../Components/Search";
+import allProducts from "../Data/products.json";
 import ProductItem from "../Components/ProductItem";
+import { colors } from "../Global/colors";
 
-const ItemListCategories = ({ category }) => {
+const ItemListCategories = ({
+  category,
+  setCategorySelected,
+  setProductDetailId,
+}) => {
+  const [searchKeyword, setSearchKeyword] = useState("");
   const [products, setProducts] = useState([]);
-  const [keyword, setKeyword] = useState("");
 
   useEffect(() => {
-    let filteredProducts = allProducts;
+    const filteredProducts = allProducts.filter((product) => {
+      if (category && product.category !== category) {
+        return false;
+      }
+      if (!product.title.includes(searchKeyword)) {
+        return false;
+      }
+      return true;
+    });
 
-    if (category) {
-      filteredProducts = filteredProducts.filter(
-        (product) => product.category === category
-      );
-    }
-
-    filteredProducts = filteredProducts.filter((product) =>
-      product.title.includes(keyword)
-    );
     setProducts(filteredProducts);
-  }, [category, keyword]);
+  }, [category, searchKeyword]);
+
+  const handleGoBack = () => {
+    setCategorySelected("");
+  };
 
   return (
-    <View>
-      <Cabezera title={category ?? "Products"} />
-      <Search onSearch={setKeyword} />
-      <View style={styles.container}>
-        <FlatList
-          data={products}
-          renderItem={({ item }) => <ProductItem item={item} />}
-          keyExtractor={(item) => item.id}
-        />
-      </View>
-    </View>
+    <>
+      <Header />
+      <Search setKeyword={setSearchKeyword} />
+      <Pressable style={styles.goBack} onPress={handleGoBack}>
+        <Text>Volver</Text>
+      </Pressable>
+      <FlatList
+        style={styles.container}
+        data={products}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <ProductItem item={item} setProductDetailId={setProductDetailId} />
+        )}
+      />
+    </>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     width: "100%",
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
+  },
+  goBack: {
+    width: "100%",
+    backgroundColor: colors.green1,
+    padding: 10,
+    paddingStart: 40,
   },
 });
 

@@ -1,12 +1,14 @@
-import { StyleSheet, View } from "react-native";
+import React, { useEffect, useState } from "react";
+import { StyleSheet, View, SafeAreaView, StatusBar } from "react-native";
+import { useFonts } from "expo-font";
 import Home from "./src/Screens/Home";
 import ItemListCategories from "./src/Screens/ItemListCategories";
 import ItemDetail from "./src/Screens/ItemDetail";
-import { useState } from "react";
-import { useFonts } from "expo-font";
+import { colors } from "./src/Global/colors";
 
 const App = () => {
-  const [categorySelected, setCategorySelected] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedProductDetailId, setSelectedProductDetailId] = useState(0);
 
   const [fontLoaded] = useFonts({
     Josefin: require("./assets/Fonts/JosefinSans-Bold.ttf"),
@@ -15,23 +17,37 @@ const App = () => {
   if (!fontLoaded) return null;
 
   return (
-    <View style={styles.container}>
-      {categorySelected ? (
-        <ItemListCategories category={categorySelected} />
-      ) : (
-        <Home setCategorySelected={setCategorySelected} />
-      )}
-    </View>
+    <>
+      <StatusBar backgroundColor={colors.green1} />
+      <SafeAreaView style={styles.container}>
+        {selectedCategory ? (
+          selectedProductDetailId !== 0 ? (
+            <ItemDetail
+              productDetailId={selectedProductDetailId}
+              setProductDetailId={setSelectedProductDetailId}
+            />
+          ) : (
+            <ItemListCategories
+              category={selectedCategory}
+              setCategorySelected={setSelectedCategory}
+              setProductDetailId={setSelectedProductDetailId}
+            />
+          )
+        ) : (
+          <Home setCategorySelected={setSelectedCategory} />
+        )}
+      </SafeAreaView>
+    </>
   );
 };
-
-export default App;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: colors.white,
     alignItems: "center",
-    justifyContent: "start",
+    justifyContent: "flex-start",
   },
 });
+
+export default App;

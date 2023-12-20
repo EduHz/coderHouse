@@ -1,29 +1,36 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import React from "react";
+import { Pressable, StyleSheet, Text } from "react-native";
 import { colors } from "../Global/colors";
 import CardShadow from "../Wrappers/CardShadow";
-import Card from "./Card";
 
-const CategoryItem = ({ category }) => {
+const CategoryItem = ({ category, setCategorySelected }) => {
+  const handlePress = () => {
+    setCategorySelected(category);
+  };
+
   return (
-    <Pressable onPress={() => console.log("Category pressed: " + category)}>
-      <Card style={styles.cardContainer}>
+    <Pressable onPress={handlePress}>
+      <CardShadow style={styles.container}>
         <Text style={styles.text}>{category}</Text>
-      </Card>
+      </CardShadow>
     </Pressable>
   );
 };
 
-export default CategoryItem;
-
 const styles = StyleSheet.create({
-  cardContainer: {
-    marginHorizontal: 30,
+  container: {
+    width: "80%",
+    marginHorizontal: "10%",
+    backgroundColor: colors.green2,
     marginVertical: 10,
     padding: 10,
     justifyContent: "center",
-    alignItems: "flex-start",
+    alignItems: "center",
+    flex: 1,
   },
   text: {
-    fontSize: 20,
+    // Estilos de texto si es necesario
   },
 });
+
+export default CategoryItem;
