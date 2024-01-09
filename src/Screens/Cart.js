@@ -4,7 +4,7 @@ import React from "react";
 export default function Cart() {
   return (
     <View>
-      <Text>Cart</Text>
+      <Text>Unas ganas de lago</Text>
     </View>
   );
 }

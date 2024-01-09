@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, StatusBar } from "react-native";
+import { StatusBar } from "react-native";
 import { useFonts } from "expo-font";
 import { colors } from "./src/Global/colors";
 import TabNavigator from "./src/navigation/TabNavigator";
@@ -19,11 +19,11 @@ const App = () => {
 
 export default App;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "start",
-  },
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: "#fff",
+//     alignItems: "center",
+//     justifyContent: "start",
+//   },
+// });

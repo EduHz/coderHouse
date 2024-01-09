@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Pressable,
+  ScrollView,
+} from "react-native";
 import allProduct from "../Data/products.json";
 import { colors } from "../Global/colors";
 
@@ -14,7 +21,7 @@ const ItemDetail = ({ route }) => {
   }, [id]);
 
   return (
-    <View style={styles.container}>
+    <ScrollView contentContainerStyle={styles.container}>
       <Image
         style={styles.image}
         source={{ uri: images[2] }}
@@ -30,7 +37,7 @@ const ItemDetail = ({ route }) => {
           <Text style={styles.buyNowButtonText}>Buy Now</Text>
         </Pressable>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
@@ -38,7 +45,7 @@ export default ItemDetail;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    flexGrow: 1,
     alignItems: "center",
   },
   image: {
