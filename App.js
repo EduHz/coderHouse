@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, StatusBar } from "react-native";
 import { useFonts } from "expo-font";
 import { colors } from "./src/Global/colors";
-import Navigator from "./src/navigation/Navigator";
+import TabNavigator from "./src/navigation/TabNavigator";
 import { fonts } from "./src/Global/fonts";
 
 const App = () => {
@@ -12,7 +12,7 @@ const App = () => {
   return (
     <>
       <StatusBar backgroundColor={colors.green1} />
-      <Navigator />
+      <TabNavigator />
     </>
   );
 };
