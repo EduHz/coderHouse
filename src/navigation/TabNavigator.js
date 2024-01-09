@@ -3,8 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { StyleSheet } from "react-native";
 import CartStack from "./CartStack";
 import ShopStack from "./ShopStack";
-import { colors } from "../Global/colors";
 import NavigationIcons from "./NavigationIcons";
+import OrderStack from "./OrderStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -37,6 +37,19 @@ export default function TabNavigator() {
           options={{
             tabBarIcon: ({ focused }) => (
               <NavigationIcons focused={focused} name={"cart"} text={"Cart"} />
+            ),
+          }}
+        />
+        <Tab.Screen
+          name="OrderStack"
+          component={OrderStack}
+          options={{
+            tabBarIcon: ({ focused }) => (
+              <NavigationIcons
+                focused={focused}
+                name={"format-list-bulleted-square"}
+                text={"Order"}
+              />
             ),
           }}
         />

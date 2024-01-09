@@ -20,7 +20,7 @@ const getScreenOptions = ({ route }) => {
 
 export default function CartStack() {
   return (
-    <Stack.Navigator initialRouteName="Home" screenOptions={getScreenOptions}>
+    <Stack.Navigator initialRouteName="Cart" screenOptions={getScreenOptions}>
       <Stack.Screen name="Cart" component={Cart} />
     </Stack.Navigator>
   );
