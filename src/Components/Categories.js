@@ -2,6 +2,7 @@ import React from "react";
 import { FlatList, StyleSheet } from "react-native";
 import categories from "../Data/categories.json";
 import CategoryItem from "./CategoryItem";
+import Counter from "./Counter";
 
 const Categories = ({ navigation, route }) => {
   const renderItem = ({ item }) => {
@@ -11,11 +12,14 @@ const Categories = ({ navigation, route }) => {
   };
 
   return (
-    <FlatList
-      style={styles.container}
-      data={categories}
-      renderItem={renderItem}
-    />
+    <>
+      <Counter />
+      <FlatList
+        style={styles.container}
+        data={categories}
+        renderItem={renderItem}
+      />
+    </>
   );
 };
 

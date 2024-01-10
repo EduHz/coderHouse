@@ -7,7 +7,7 @@ import { fonts } from "./src/Global/fonts";
 import { Provider } from "react-redux";
 import Store from "./src/Store/index";
 
-const App = () => {
+export default function App() {
   const [fontLoaded] = useFonts(fonts);
   if (!fontLoaded) return null;
 
@@ -17,17 +17,4 @@ const App = () => {
       <TabNavigator />
     </Provider>
   );
-};
-
-export default App;
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: "#fff",
-//     alignItems: "center",
-//     justifyContent: "start",
-//   },
-// });
-
-// Video en 1:22:44
+}
