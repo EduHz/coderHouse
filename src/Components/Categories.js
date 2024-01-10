@@ -1,10 +1,12 @@
 import React from "react";
 import { FlatList, StyleSheet } from "react-native";
-import categories from "../Data/categories.json";
 import CategoryItem from "./CategoryItem";
 import Counter from "./Counter";
+import { useSelector } from "react-redux";
 
 const Categories = ({ navigation, route }) => {
+  const categories = useSelector((state) => state.shopReducer.value.categories);
+
   const renderItem = ({ item }) => {
     return (
       <CategoryItem category={item} navigation={navigation} route={route} />
