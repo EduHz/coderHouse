@@ -13,7 +13,7 @@ const ItemListCategories = ({ navigation, route }) => {
   );
 
   const [keyword, setKeyword] = useState("");
-  // Declare setProducts as a state setter
+
   const [filteredProducts, setFilteredProducts] = useState(products);
 
   const dispatch = useDispatch();
@@ -27,7 +27,6 @@ const ItemListCategories = ({ navigation, route }) => {
       const filteredByName = products.filter((product) =>
         product.title.toLowerCase().includes(keyword.toLowerCase())
       );
-      // Update the state using setFilteredProducts
       setFilteredProducts(filteredByName);
     };
 
