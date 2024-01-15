@@ -9,9 +9,8 @@ import {
 } from "../Features/Counter/counterSlice";
 
 export default function Counter() {
-  const count = useSelector((state) => state.counterReducer.value);
+  const count = useSelector((state) => state.counter.value); // Cambiado de state.counterReducer.value a state.counter.value
   const dispatch = useDispatch();
-
   const [inputToAdd, setInputToAdd] = useState("");
 
   const confirmAdd = () => {
@@ -38,7 +37,6 @@ export default function Counter() {
           onChangeText={(text) => setInputToAdd(text)}
           keyboardType="numeric"
           onKeyPress={(event) => {
-            // Permite solo dígitos y el carácter de retroceso
             if (event.nativeEvent.key === "." || isNaN(event.nativeEvent.key)) {
               event.preventDefault();
             }

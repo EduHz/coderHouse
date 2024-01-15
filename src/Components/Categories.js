@@ -2,10 +2,12 @@ import React from "react";
 import { FlatList, StyleSheet } from "react-native";
 import CategoryItem from "./CategoryItem";
 import Counter from "./Counter";
-import { useSelector } from "react-redux";
+import { useGetCategoriesQuery } from "../Store/shopServices";
 
 const Categories = ({ navigation, route }) => {
-  const categories = useSelector((state) => state.shopReducer.value.categories);
+  // const categories = useSelector((state) => state.shopReducer.value.categories);
+
+  const { data, isLoading, error } = useGetCategoriesQuery();
 
   const renderItem = ({ item }) => {
     return (
@@ -18,8 +20,9 @@ const Categories = ({ navigation, route }) => {
       <Counter />
       <FlatList
         style={styles.container}
-        data={categories}
         renderItem={renderItem}
+        data={data}
+        keyExtractor={(category) => category}
       />
     </>
   );
