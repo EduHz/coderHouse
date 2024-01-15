@@ -1,44 +1,32 @@
-import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet } from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import { setCategorySelected } from "../Features/Shop/shopSlice";
 import Search from "../Components/Search";
 import ProductItem from "../Components/ProductItem";
+import { useEffect, useState } from "react";
+import { colors } from "../Global/colors";
+import { useGetProductsQuery } from "../Store/shopServices";
 
 const ItemListCategories = ({ navigation, route }) => {
   const { category } = route.params;
-
-  const products = useSelector(
-    (state) => state.shopReducer.value.productsFilteredByCategory
-  );
-
+  const { data, isLoading, error } = useGetProductsQuery(category);
   const [keyword, setKeyword] = useState("");
-
-  const [filteredProducts, setFilteredProducts] = useState(products);
-
-  const dispatch = useDispatch();
+  const [products, setProducts] = useState();
 
   useEffect(() => {
-    dispatch(setCategorySelected(category));
-  }, [category, dispatch]);
-
-  useEffect(() => {
-    const filterProducts = () => {
-      const filteredByName = products.filter((product) =>
-        product.title.toLowerCase().includes(keyword.toLowerCase())
+    if (!isLoading) {
+      const dataArray = Object.values(data);
+      const productsFiltered = dataArray.filter((product) =>
+        product.title.includes(keyword)
       );
-      setFilteredProducts(filteredByName);
-    };
-
-    filterProducts();
-  }, [products, keyword]);
+      setProducts(productsFiltered);
+    }
+  }, [keyword, data]);
 
   return (
     <>
       <Search setKeyword={setKeyword} />
       <FlatList
         style={styles.container}
-        data={filteredProducts}
+        data={products}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <ProductItem item={item} navigation={navigation} route={route} />
@@ -52,6 +40,12 @@ export default ItemListCategories;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    width: "100%",
+  },
+  goBack: {
+    width: "100%",
+    backgroundColor: colors.green1,
+    padding: 10,
+    paddingStart: 40,
   },
 });
