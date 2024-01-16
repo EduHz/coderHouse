@@ -1,31 +1,28 @@
 import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
-import allCartItems from "../Data/cart.json";
 import { useEffect, useState } from "react";
 import CartItem from "../Components/CartItem";
 import { colors } from "../Global/colors";
+import { useSelector } from "react-redux";
 
 export default function Cart() {
-  const [carItems, setCartItems] = useState([]);
+  const cartItems = useSelector((state) => state.cart.value.items);
   const [total, setTotal] = useState(0);
 
   useEffect(() => {
-    // Establece el carrito primero
-
-    // Calcula el total después de establecer el carrito
-    const total = allCartItems.reduce(
+    // Calculate the total based on the cartItems
+    const total = cartItems.reduce(
       (acc, product) => acc + product.price * product.quantity,
       0
     );
-    setCartItems(allCartItems);
     setTotal(total);
-  }, [allCartItems]);
+  }, [cartItems]);
 
   return (
     <View style={styles.container}>
       <FlatList
         style={styles.list}
-        data={allCartItems}
-        keyExtractor={(item) => item.id}
+        data={cartItems}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={({ item }) => <CartItem item={item} />}
       />
       <View style={styles.confirmContainer}>
@@ -37,6 +34,8 @@ export default function Cart() {
     </View>
   );
 }
+
+// Styles...
 
 const styles = StyleSheet.create({
   container: {

@@ -9,8 +9,11 @@ import {
 } from "react-native";
 import allProduct from "../Data/products.json";
 import { colors } from "../Global/colors";
+import { useDispatch } from "react-redux";
+import { addItem } from "../Features/Cart/cartSlice";
 
 const ItemDetail = ({ route }) => {
+  const dispatch = useDispatch();
   const { id } = route.params;
   const [product, setProduct] = useState({});
   const images = product.images || [];
@@ -19,6 +22,12 @@ const ItemDetail = ({ route }) => {
     const productFound = allProduct.find((p) => p.id === id);
     setProduct(productFound);
   }, [id]);
+
+  const handleAddToCart = () => {
+    // Assuming quantity is always 1 for simplicity, adjust as needed
+    const cartItem = { id: product.id, quantity: 1, ...product };
+    dispatch(addItem(cartItem));
+  };
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -33,8 +42,8 @@ const ItemDetail = ({ route }) => {
       </View>
       <View style={styles.priceContainer}>
         <Text style={styles.price}>$ {product.price}</Text>
-        <Pressable style={styles.buyNowButton}>
-          <Text style={styles.buyNowButtonText}>Buy Now</Text>
+        <Pressable style={styles.buyNowButton} onPress={handleAddToCart}>
+          <Text style={styles.buyNowButtonText}>Add to Cart</Text>
         </Pressable>
       </View>
     </ScrollView>
