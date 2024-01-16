@@ -1,14 +1,17 @@
-import { StyleSheet } from "react-native";
-import Categories from "../Components/Categories";
+import { StyleSheet } from 'react-native'
+import Categories from '../Components/Categories'
 
-const Home = ({ navigation, route }) => {
+const Home = ({navigation,route}) => {
+  
   return (
-    <>
-      <Categories navigation={navigation} route={route} />
-    </>
-  );
-};
+        <>
+            <Categories navigation={navigation} route={route}/>
+        </>
+  )
+}
 
-export default Home;
+export default Home
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+
+})

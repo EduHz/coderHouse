@@ -1,15 +1,15 @@
+import React, { useEffect, useState } from "react";
 import { FlatList, StyleSheet } from "react-native";
 import Search from "../Components/Search";
 import ProductItem from "../Components/ProductItem";
-import { useEffect, useState } from "react";
 import { colors } from "../Global/colors";
-import { useGetProductsQuery } from "../Store/shopServices";
+import { useGetProductsQuery } from "../app/services/shopServices";
 
 const ItemListCategories = ({ navigation, route }) => {
   const { category } = route.params;
-  const { data, isLoading, error } = useGetProductsQuery(category);
+  const { data, isLoading } = useGetProductsQuery(category);
   const [keyword, setKeyword] = useState("");
-  const [products, setProducts] = useState();
+  const [products, setProducts] = useState([]);
 
   useEffect(() => {
     if (!isLoading) {
@@ -41,6 +41,9 @@ export default ItemListCategories;
 const styles = StyleSheet.create({
   container: {
     width: "100%",
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: colors.lightGray, // You can replace this with your desired border color
   },
   goBack: {
     width: "100%",

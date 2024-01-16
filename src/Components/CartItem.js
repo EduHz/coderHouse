@@ -1,43 +1,55 @@
 import { StyleSheet, Text, View } from "react-native";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
+import { FontAwesome } from "@expo/vector-icons"; // Changed icon library
 import { colors } from "../Global/colors";
 
-export default function CartItem({ item }) {
+export default function CustomCartItem({ item }) {
   return (
-    <View style={styles.card} onPress={() => {}}>
+    <View style={styles.container}>
       <View style={styles.textContainer}>
-        <Text style={styles.text}>{item.title}</Text>
-        <Text style={styles.text2}>{item.brand}</Text>
-        <Text style={styles.text2}>$ {item.price}</Text>
+        <Text style={styles.title}>{item.title}</Text>
+        <Text style={styles.brand}>{item.brand}</Text>
+        <Text style={styles.quantityAndPrice}>
+          Cantidad: {item.quantity} Precio $ {item.price}
+        </Text>
       </View>
-      <MaterialCommunityIcons
-        name={"delete"}
-        color={"#8594E1"}
-        size={30} // Aumenta el tamaño del icono en 4
-      />
+      <FontAwesome name="trash" size={25} color={colors.red} />{" "}
+      {/* Changed trash icon color */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  card: {
-    flex: 1,
-    height: 100,
-    backgroundColor: colors.green2,
-    padding: 10,
-    margin: 10,
-    borderWidth: 2,
-    borderRadius: 10,
+  container: {
+    backgroundColor: colors.blue, // Changed background color
+    margin: 15, // Increased margin for better spacing
+    padding: 15, // Increased padding for better spacing
+    height: 120, // Increased height for better visibility
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+    borderRadius: 15, // Increased border radius for a softer look
+    borderWidth: 2,
   },
   textContainer: {
     width: "70%",
-    flexDirection: "column",
-    justifyContent: "flex-start",
-    alignItems: "flex-start",
+    flexDirection: "column", // Changed to column for better alignment
+    justifyContent: "space-between",
+    marginLeft: 10, // Added margin for better spacing
   },
-  text: { fontFamily: "Josefin", fontSize: 19, color: colors.white1 },
-  text2: { fontFamily: "Josefin", fontSize: 14, color: colors.white1 },
+  title: {
+    fontSize: 20, // Slightly increased font size
+    color: colors.darkGray, // Changed text color
+    fontFamily: "Roboto", // Changed font family
+    fontWeight: "bold", // Added bold font weight
+  },
+  brand: {
+    fontSize: 18, // Slightly increased font size
+    color: colors.darkGray, // Changed text color
+    fontFamily: "Roboto", // Changed font family
+  },
+  quantityAndPrice: {
+    fontSize: 16, // Slightly decreased font size
+    color: colors.darkGray, // Changed text color
+    fontFamily: "Roboto", // Changed font family
+  },
 });

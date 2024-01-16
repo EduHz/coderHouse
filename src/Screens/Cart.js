@@ -1,58 +1,46 @@
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
-import { useEffect, useState } from "react";
+import React, { useEffect } from "react";
+import { StyleSheet, Text, View, FlatList, Pressable } from "react-native";
 import CartItem from "../Components/CartItem";
-import { colors } from "../Global/colors";
 import { useSelector } from "react-redux";
+import { usePostOrdersMutation } from "../app/services/shopServices";
 
-export default function Cart() {
-  const cartItems = useSelector((state) => state.cart.value.items);
-  const [total, setTotal] = useState(0);
-
-  useEffect(() => {
-    // Calculate the total based on the cartItems
-    const total = cartItems.reduce(
-      (acc, product) => acc + product.price * product.quantity,
-      0
-    );
-    setTotal(total);
-  }, [cartItems]);
+const Cart = () => {
+  const cart = useSelector((state) => state.cart.value);
+  const [triggerPostOrder] = usePostOrdersMutation();
 
   return (
     <View style={styles.container}>
       <FlatList
-        style={styles.list}
-        data={cartItems}
-        keyExtractor={(item) => item.id.toString()}
+        data={cart.items}
+        keyExtractor={(item) => item.id}
         renderItem={({ item }) => <CartItem item={item} />}
       />
       <View style={styles.confirmContainer}>
-        <Pressable>
-          <Text style={styles.confirmText}>Confirm</Text>
+        <Pressable onPress={() => triggerPostOrder(cart)}>
+          <Text style={styles.text}>Confirmar</Text>
         </Pressable>
-        <Text style={styles.confirmText}>Total: $ {total}</Text>
+        <Text style={styles.text}>Total: $ {cart.total} </Text>
       </View>
     </View>
   );
-}
+};
 
-// Styles...
+export default Cart;
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingBottom: 100,
-    justifyContent: "flex-end",
-    alignItems: "center",
-    backgroundColor: colors.white1,
+    marginBottom: 130,
   },
-  list: { width: "100%" },
   confirmContainer: {
+    backgroundColor: "grey",
+    padding: 25,
     flexDirection: "row",
-    alignItems: "center",
     justifyContent: "space-between",
-    backgroundColor: "gray",
-    padding: 15,
-    width: "100%",
   },
-  confirmText: { fontFamily: "PlayFair", fontSize: 18, color: "white" },
+  text: {
+    color: "white",
+    fontFamily: "PlayfairDisplay-Regular", // Corrected font family name
+    fontSize: 16, // Added font size for better visibility
+  },
 });

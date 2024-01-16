@@ -2,18 +2,18 @@ import { Pressable, StyleSheet, Text, View } from "react-native";
 import { colors } from "../Global/colors";
 import CardShadow from "../Wrappers/CardShadow";
 import { useDispatch } from "react-redux";
-import { setCategorySelected } from "../Features/Shop/shopSlice";
+import { setProductsFilteredByCategory } from "../features/shop/shopSlice";
 
-const CategoryItem = ({ category, navigation }) => {
+const CustomCategoryItem = ({ category, navigation, route }) => {
   const dispatch = useDispatch();
 
+  const handlePress = () => {
+    dispatch(setProductsFilteredByCategory(category));
+    navigation.navigate("Category", { category });
+  };
+
   return (
-    <Pressable
-      onPress={() => {
-        dispatch(setCategorySelected(category));
-        navigation.navigate("Category", { category });
-      }}
-    >
+    <Pressable onPress={handlePress}>
       <CardShadow style={styles.container}>
         <Text style={styles.text}>{category}</Text>
       </CardShadow>
@@ -21,21 +21,23 @@ const CategoryItem = ({ category, navigation }) => {
   );
 };
 
-export default CategoryItem;
+export default CustomCategoryItem;
 
 const styles = StyleSheet.create({
   container: {
     width: "80%",
     marginHorizontal: "10%",
-    backgroundColor: colors.blue1,
-    margin: 10,
-    padding: 10,
+    backgroundColor: colors.blue, // Changed background color
+    marginVertical: 10, // Changed to marginVertical for better spacing
+    padding: 15, // Increased padding for better spacing
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 5,
+    borderRadius: 15, // Increased border radius for a softer look
+    borderWidth: 2,
   },
   text: {
-    color: "white",
-    fontSize: 10,
+    fontSize: 18, // Slightly increased font size
+    color: colors.darkGray, // Changed text color
+    fontFamily: "Roboto", // Changed font family
   },
 });
