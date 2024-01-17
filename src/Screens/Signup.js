@@ -10,53 +10,55 @@ import { signupSchema } from "../validations/signupSchema";
 
 const Signup = ({ navigation }) => {
   const dispatch = useDispatch();
+  const [signupData, setSignupData] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+  const [errors, setErrors] = useState({
+    email: "",
+    password: "",
+    confirmPassword: "",
+  });
+
   const [triggerSignup, { data, isError, isSuccess, error, isLoading }] =
     useSignupMutation();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
 
   useEffect(() => {
     if (isSuccess) dispatch(setUser(data));
     if (isError) console.log(error);
   }, [data, isError, isSuccess]);
 
-  const onSubmit = () => {
+  const validateForm = () => {
     try {
-      signupSchema.validateSync({ email, password, confirmPassword });
-      triggerSignup({ email, password });
+      signupSchema.validateSync(signupData);
+      triggerSignup({ email: signupData.email, password: signupData.password });
     } catch (validationError) {
-      console.log(validationError.path);
-      console.log(validationError.message);
+      const { path, message } = validationError;
+      setErrors((prevErrors) => ({ ...prevErrors, [path]: message }));
     }
+  };
+
+  const handleInputChange = (field, value) => {
+    setSignupData((prevData) => ({ ...prevData, [field]: value }));
+    setErrors((prevErrors) => ({ ...prevErrors, [field]: "" }));
   };
 
   return (
     <View style={styles.main}>
       <View style={styles.container}>
         <Text style={styles.title}>Sign up</Text>
-        <InputForm
-          label="Email"
-          value={email}
-          onChangeText={(t) => setEmail(t)}
-          isSecure={false}
-          error=""
-        />
-        <InputForm
-          label="Password"
-          value={password}
-          onChangeText={(t) => setPassword(t)}
-          isSecure={true}
-          error=""
-        />
-        <InputForm
-          label="Confirm password"
-          value={confirmPassword}
-          onChangeText={(t) => setConfirmPassword(t)}
-          isSecure={true}
-          error=""
-        />
-        <SubmitButton title="Send" onPress={onSubmit} />
+        {["email", "password", "confirmPassword"].map((field) => (
+          <InputForm
+            key={field}
+            label={field === "confirmPassword" ? "Confirm password" : field}
+            value={signupData[field]}
+            onChangeText={(text) => handleInputChange(field, text)}
+            isSecure={field === "password" || field === "confirmPassword"}
+            error={errors[field]}
+          />
+        ))}
+        <SubmitButton title="Send" onPress={validateForm} />
         <Text style={styles.sub}>Already have an account?</Text>
         <Pressable onPress={() => navigation.navigate("Login")}>
           <Text style={styles.subLink}>Login</Text>

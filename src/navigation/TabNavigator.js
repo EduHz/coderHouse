@@ -5,6 +5,7 @@ import CartStack from "./CartStack";
 import { colors } from "../Global/colors";
 import OrdersStack from "./OrdersStack";
 import TabIcon from "../Components/TabIcon";
+import MyProfileStack from "./MyProfileStack";
 
 const Tab = createBottomTabNavigator();
 
@@ -41,6 +42,15 @@ const TabNavigator = () => {
         options={{
           tabBarIcon: ({ focused }) => (
             <TabIcon icon="list" label="Ordenes" focused={focused} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="MyProfileStack"
+        component={MyProfileStack}
+        options={{
+          tabBarIcon: ({ focused }) => (
+            <TabIcon icon="user" label="Perfil" focused={focused} />
           ),
         }}
       />
