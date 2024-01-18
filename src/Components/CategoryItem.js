@@ -1,43 +1,35 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { colors } from "../Global/colors";
-import CardShadow from "../Wrappers/CardShadow";
-import { useDispatch } from "react-redux";
-import { setProductsFilteredByCategory } from "../features/shop/shopSlice";
+import { Pressable, StyleSheet, Text, View } from 'react-native'
+import { colors } from '../Global/colors'
+import CardShadow from '../Wrappers/CardShadow'
+import { useDispatch } from 'react-redux'
+import { setProductsFilteredByCategory} from "../features/shop/shopSlice"
 
-const CustomCategoryItem = ({ category, navigation, route }) => {
-  const dispatch = useDispatch();
+const CategoryItem = ({category,navigation,route }) => {
 
-  const handlePress = () => {
-    dispatch(setProductsFilteredByCategory(category));
-    navigation.navigate("Category", { category });
-  };
+  const dispatch = useDispatch()
 
   return (
-    <Pressable onPress={handlePress}>
+    <Pressable onPress={()=>{ 
+        dispatch(setProductsFilteredByCategory(category))
+        navigation.navigate("Category",{category})
+      }}>
       <CardShadow style={styles.container}>
         <Text style={styles.text}>{category}</Text>
       </CardShadow>
     </Pressable>
-  );
-};
+  )
+}
 
-export default CustomCategoryItem;
+export default CategoryItem
 
 const styles = StyleSheet.create({
-  container: {
-    width: "80%",
-    marginHorizontal: "10%",
-    backgroundColor: colors.blue, // Changed background color
-    marginVertical: 10, // Changed to marginVertical for better spacing
-    padding: 15, // Increased padding for better spacing
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: 15, // Increased border radius for a softer look
-    borderWidth: 2,
-  },
-  text: {
-    fontSize: 18, // Slightly increased font size
-    color: colors.darkGray, // Changed text color
-    fontFamily: "Roboto", // Changed font family
-  },
-});
+    container:{
+        width:"80%",
+        marginHorizontal:"10%",
+        backgroundColor:colors.green2,
+        margin:10,
+        padding:10,
+        justifyContent:"center",
+        alignItems:"center"
+    }
+})

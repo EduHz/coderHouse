@@ -1,54 +1,52 @@
-import React, { useEffect, useState } from "react";
-import { FlatList, StyleSheet } from "react-native";
-import Search from "../Components/Search";
-import ProductItem from "../Components/ProductItem";
-import { colors } from "../Global/colors";
-import { useGetProductsQuery } from "../app/services/shopServices";
+import { FlatList, StyleSheet} from 'react-native'
 
-const ItemListCategories = ({ navigation, route }) => {
-  const { category } = route.params;
-  const { data, isLoading } = useGetProductsQuery(category);
-  const [keyword, setKeyword] = useState("");
-  const [products, setProducts] = useState([]);
+import Search from '../Components/Search'
+import ProductItem from '../Components/ProductItem'
+import { useEffect, useState } from 'react'
+import { colors } from '../Global/colors'
+import { useGetProductsQuery } from '../app/services/shopServices'
 
-  useEffect(() => {
-    if (!isLoading) {
-      const dataArray = Object.values(data);
-      const productsFiltered = dataArray.filter((product) =>
-        product.title.includes(keyword)
-      );
-      setProducts(productsFiltered);
-    }
-  }, [keyword, data]);
+
+const ItemListCategories = ({navigation,route}) => {
+  const {category} = route.params
+  const {data,isLoading,error} = useGetProductsQuery(category)
+  const [keyword,setKeyword] = useState("")
+  const [products,setProducts] = useState()
+
+  
+
+  useEffect(()=>{
+      if(!isLoading) {
+        const dataArray = Object.values(data)
+        const productsFiltered = dataArray.filter(product => product.title.includes(keyword))
+        setProducts(productsFiltered)
+      }
+
+  },[keyword,data])
 
   return (
     <>
-      <Search setKeyword={setKeyword} />
+      <Search setKeyword={setKeyword}/>
       <FlatList
         style={styles.container}
         data={products}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <ProductItem item={item} navigation={navigation} route={route} />
-        )}
+        keyExtractor={item => item.id}
+        renderItem={({item})=> <ProductItem item={item} navigation={navigation} route={route} />}
       />
     </>
-  );
-};
+  )
+}
 
-export default ItemListCategories;
+export default ItemListCategories
 
 const styles = StyleSheet.create({
-  container: {
-    width: "100%",
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
-    borderColor: colors.lightGray, // You can replace this with your desired border color
-  },
-  goBack: {
-    width: "100%",
-    backgroundColor: colors.green1,
-    padding: 10,
-    paddingStart: 40,
-  },
-});
+ container:{
+  width:"100%"
+ },
+ goBack:{
+  width:"100%",
+  backgroundColor:colors.green1,
+  padding:10,
+  paddingStart:40
+ }
+})

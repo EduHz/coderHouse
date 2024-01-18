@@ -1,40 +1,36 @@
-import { StyleSheet, Text, View, Image, Pressable } from "react-native";
-import React, { useState } from "react";
-import AddButton from "../Components/AddButon";
+import { StyleSheet, View,Image } from 'react-native'
+import AddButton from '../Components/AddButton'
+import { useGetProfileImageQuery } from '../app/services/shopServices'
+import { useSelector } from 'react-redux'
 
-const MyProfile = ({ navigation }) => {
-  const [image, setImage] = useState(null);
-
-  // const navigateToImageSelector = () => {
-  //   navigation.navigate("ImageSelector");
-  // };
+const MyProfile = ({navigation}) => {
+    const localId = useSelector(state => state.auth.value.localId)
+    const {data} = useGetProfileImageQuery(localId)
 
   return (
     <View style={styles.container}>
-      {image ? null : (
-        <>
-          <Image
-            source={require("../../assets/defaultProfile.png")}
+        <Image
+            source={data ? {uri:data.image} : require("../../assets/user.png")}
             style={styles.image}
-            resizeMode="cover" // Corrected typo: recizeMode to resizeMode
-          />
-          <AddButton
-            title="Add Profile Picture"
-            onPress={() => navigation.navigate("ImageSelector")}
-          />
-        </>
-      )}
+            resizeMode='cover'
+        />
+        <AddButton title={"Add profile picture"} onPress={()=> navigation.navigate("ImageSelector")}/>
     </View>
-  );
-};
+  )
+}
 
-export default MyProfile;
+
+export default MyProfile
+
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    marginTop: 20,
-  },
-  image: { width: 200, height: 200 },
-});
+    container:{
+        flex:1,
+        alignItems:"center",
+        marginTop:20
+    },
+    image:{
+        width:200,
+        height:200
+    }
+})
