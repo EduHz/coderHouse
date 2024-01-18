@@ -1,9 +1,13 @@
-import { StyleSheet, Text, View, Image } from "react-native";
+import { StyleSheet, Text, View, Image, Pressable } from "react-native";
 import React, { useState } from "react";
 import AddButton from "../Components/AddButon";
 
-const MyProfile = () => {
+const MyProfile = ({ navigation }) => {
   const [image, setImage] = useState(null);
+
+  // const navigateToImageSelector = () => {
+  //   navigation.navigate("ImageSelector");
+  // };
 
   return (
     <View style={styles.container}>
@@ -12,9 +16,12 @@ const MyProfile = () => {
           <Image
             source={require("../../assets/defaultProfile.png")}
             style={styles.image}
-            recizeMode="cover"
+            resizeMode="cover" // Corrected typo: recizeMode to resizeMode
           />
-          <AddButton title="Add Profile Picture" />
+          <AddButton
+            title="Add Profile Picture"
+            onPress={() => navigation.navigate("ImageSelector")}
+          />
         </>
       )}
     </View>
@@ -26,7 +33,6 @@ export default MyProfile;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    // justifyContent: "center",
     alignItems: "center",
     marginTop: 20,
   },
