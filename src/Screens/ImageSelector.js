@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Image, View } from "react-native";
+import { StyleSheet, Image, View, Text } from "react-native";
 import AddButton from "../Components/AddButton";
 import * as ImagePicker from "expo-image-picker";
 import { usePostProfileImageMutation } from "../app/services/shopServices";
 import { useSelector } from "react-redux";
 import { useGetProfileImageQuery } from "../app/services/shopServices";
+import { colors } from "../Global/colors";
 
 const ImageSelector = ({ navigation }) => {
   const [image, setImage] = useState("");
@@ -40,13 +41,24 @@ const ImageSelector = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Image
-        source={image ? { uri: image } : require("../../assets/user.png")}
-        style={styles.image}
-        resizeMode="cover"
-      />
-      <AddButton title="Tomar foto" onPress={pickImage} />
-      <AddButton title="Confirm photo" onPress={confirmImage} />
+      {image ? (
+        <>
+          <Image
+            source={{ uri: image }}
+            style={styles.image}
+            resizeMode="cover"
+          />
+          <AddButton title="Take another photo" onPress={pickImage} />
+          <AddButton title="Confirm photo" onPress={confirmImage} />
+        </>
+      ) : (
+        <>
+          <View style={styles.noPhotoContainer}>
+            <Text>No photo to show</Text>
+          </View>
+          <AddButton title={"Take a photo"} onPress={pickImage} />
+        </>
+      )}
     </View>
   );
 };
@@ -57,11 +69,20 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: "center",
-    marginTop: 20,
+    justifyContent: "center",
+    gap: 20,
   },
   image: {
     width: 200,
     height: 200,
   },
-  text: {},
+  noPhotoContainer: {
+    width: 200,
+    height: 200,
+    borderWidth: 2,
+    borderColor: colors.green3,
+    padding: 10,
+    justifyContent: "center",
+    alignItems: "center",
+  },
 });
