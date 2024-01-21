@@ -5,8 +5,9 @@ import { colors } from "../Global/colors";
 import MapPreview from "../Components/MapPreview";
 
 export default function LocationSelector({ navigation }) {
-  const [location, setLocation] = useState({ latitud: "", longitude: "" });
+  const [location, setLocation] = useState({ latitude: "", longitude: "" });
   const [error, setError] = useState("");
+  const [adress, setAdress] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -22,6 +23,22 @@ export default function LocationSelector({ navigation }) {
       });
     })();
   }, []);
+  useEffect(() => {
+    (async () => {
+      try {
+        if (location.latitude) {
+          const response = await fetch(
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.latitude},${location.longitude}&key=${googleApi.mapStatic}`
+          );
+
+          const data = await response.json();
+          setAdress(data.results[0].formatted_address);
+        }
+      } catch (error) {
+        setErrorMsg(error.message);
+      }
+    })();
+  }, [location]);
 
   return (
     <View style={styles.container}>
@@ -31,7 +48,7 @@ export default function LocationSelector({ navigation }) {
         {location ? (
           <>
             <Text>
-              lat : {location.latitud}, long : {location.longitude}
+              lat : {location.latitude}, long : {location.longitude}
             </Text>
             <MapPreview location={location} />
           </>
