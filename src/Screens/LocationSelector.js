@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import * as Location from "expo-location";
 import { colors } from "../Global/colors";
+import MapPreview from "../Components/MapPreview";
 
 export default function LocationSelector({ navigation }) {
   const [location, setLocation] = useState({ latitud: "", longitude: "" });
@@ -24,21 +25,20 @@ export default function LocationSelector({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Text>My Addresses</Text>
-      {/* Flatlist con las directions */}
-      {location ? (
-        <View styles={styles.noLocationContainer}>
-          <Text>
-            Lat: {location.latitud} , long: {location.longitude}
-          </Text>
-        </View>
-      ) : (
-        <>
-          <View style={styles.noLocationContainer}>
-            <Text>{error}</Text>
-          </View>
-        </>
-      )}
+      <Text style={styles.title}>My Addresses</Text>
+      {/* Flatlist con las direcciones */}
+      <View style={styles.locationContainer}>
+        {location ? (
+          <>
+            <Text>
+              lat : {location.latitud}, long : {location.longitude}
+            </Text>
+            <MapPreview location={location} />
+          </>
+        ) : (
+          <Text>{error}</Text>
+        )}
+      </View>
     </View>
   );
 }
@@ -48,12 +48,16 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    gap: 20,
     paddingBottom: 130,
   },
-  noLocationContainer: {
+  title: {
+    fontSize: 20,
+    fontWeight: "bold",
+    marginBottom: 10,
+  },
+  locationContainer: {
     width: 200,
-    height: 200,
+    height: 100,
     borderWidth: 2,
     borderColor: colors.green3,
     padding: 10,
