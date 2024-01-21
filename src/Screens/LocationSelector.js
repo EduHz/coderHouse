@@ -3,11 +3,12 @@ import { View, Text, StyleSheet } from "react-native";
 import * as Location from "expo-location";
 import { colors } from "../Global/colors";
 import MapPreview from "../Components/MapPreview";
+import { useDispatch } from "react-redux";
 
 export default function LocationSelector({ navigation }) {
   const [location, setLocation] = useState({ latitude: "", longitude: "" });
   const [error, setError] = useState("");
-  const [adress, setAdress] = useState("");
+  const [address, setAddress] = useState("");
 
   useEffect(() => {
     (async () => {
@@ -32,13 +33,30 @@ export default function LocationSelector({ navigation }) {
           );
 
           const data = await response.json();
-          setAdress(data.results[0].formatted_address);
+          setAddress(data.results[0].formatted_address);
         }
       } catch (error) {
-        setErrorMsg(error.message);
+        setError(error.message);
       }
     })();
   }, [location]);
+
+  const onConfirmAddress = async () => {
+    try {
+      const locationFormatted = {
+        address,
+        ...location,
+      };
+      const data = await triggerPostUserLocation({
+        localId,
+        locationFormatted,
+      });
+      console.log(data);
+      navigation.goBack();
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
   return (
     <View style={styles.container}>
