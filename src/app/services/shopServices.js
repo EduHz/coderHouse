@@ -37,14 +37,10 @@ export const shopApi = createApi({
       providesTags: ["image"],
     }),
     postUserLocation: builder.mutation({
-      query: ({ location, localId }) => ({
+      query: ({ locationFormatted, localId }) => ({
         url: `locations/${localId}.json`,
         method: "PUT",
-        body: {
-          latitude: location.latitude,
-          longitude: location.longitude,
-          addres: location.addres,
-        },
+        body: locationFormatted,
       }),
     }),
   }),

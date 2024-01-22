@@ -1,24 +1,27 @@
-import { StyleSheet, View, Image } from "react-native";
+import { StyleSheet, Image } from "react-native";
+import React from "react";
 import { googleApi } from "../firebase/db";
 
-// ...
-
-export default function MapPreview({ location }) {
-  let mapPreviewUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${location.latitude},${location.longitude}&zoom=13&size=600x300&maptype=roadmap&markers=color:red%7C${location.latitud},${location.longitude}&key=${googleApi.mapStatic}`;
+const MapPreview = ({ latitude, longitude }) => {
+  const mapPreviewUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${latitude},${longitude}&zoom=15&size=700x300&maptype=roadmap&markers=color:blue%7Clabel:D%7C${latitude},${longitude}&key=${googleApi.mapStatic}`;
 
   return (
-    <View style={styles.container}>
-      <Image style={styles.mapImage} source={{ uri: mapPreviewUrl }} />
-    </View>
+    <Image
+      source={
+        latitude !== null
+          ? { uri: mapPreviewUrl }
+          : require("../../assets/map.jpg")
+      }
+      style={styles.image}
+    />
   );
-}
+};
 
-// ...
+export default MapPreview;
 
 const styles = StyleSheet.create({
-  container: {
-    justifyContent: "center",
-    alignItems: "center",
+  image: {
+    width: 300,
+    height: 300,
   },
-  mapImage: { width: 300, height: 300 },
 });

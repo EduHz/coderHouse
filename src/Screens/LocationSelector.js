@@ -1,33 +1,43 @@
+import { StyleSheet, Text, View, Image } from "react-native";
 import React, { useEffect, useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import AddButton from "../Components/AddButton";
 import * as Location from "expo-location";
-import { colors } from "../Global/colors";
 import MapPreview from "../Components/MapPreview";
-import { useDispatch } from "react-redux";
+import { googleApi } from "../firebase/db";
+import { usePostUserLocationMutation } from "../app/services/shopServices";
+import { useSelector } from "react-redux";
 
-export default function LocationSelector({ navigation }) {
-  const [location, setLocation] = useState({ latitude: "", longitude: "" });
-  const [error, setError] = useState("");
+const LocationSelector = ({ navigation }) => {
+  const localId = useSelector((state) => state.auth.value.localId);
+  const [location, setLocation] = useState({ latitude: null, longitude: null });
   const [address, setAddress] = useState("");
+  const [errorMsg, setErrorMsg] = useState(null);
+  const [triggerPostUserLocation] = usePostUserLocationMutation();
 
   useEffect(() => {
     (async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
-        setError("Permission to access location was denied");
+        setErrorMsg("Permission to access location was denied");
         return;
       }
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation({
-        latitud: location.coords.latitude,
-        longitude: location.coords.longitude,
-      });
+
+      try {
+        let location = await Location.getCurrentPositionAsync({});
+        setLocation({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        });
+      } catch (error) {
+        setErrorMsg(error.message);
+      }
     })();
   }, []);
+
   useEffect(() => {
     (async () => {
       try {
-        if (location.latitude) {
+        if (location.latitude !== null) {
           const response = await fetch(
             `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.latitude},${location.longitude}&key=${googleApi.mapStatic}`
           );
@@ -36,7 +46,7 @@ export default function LocationSelector({ navigation }) {
           setAddress(data.results[0].formatted_address);
         }
       } catch (error) {
-        setError(error.message);
+        setErrorMsg(error.message);
       }
     })();
   }, [location]);
@@ -45,7 +55,8 @@ export default function LocationSelector({ navigation }) {
     try {
       const locationFormatted = {
         address,
-        ...location,
+        latitude: location.latitude,
+        longitude: location.longitude,
       };
       const data = await triggerPostUserLocation({
         localId,
@@ -54,49 +65,28 @@ export default function LocationSelector({ navigation }) {
       console.log(data);
       navigation.goBack();
     } catch (error) {
-      setError(error.message);
+      setErrorMsg(error.message);
     }
   };
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>My Addresses</Text>
-      {/* Flatlist con las direcciones */}
-      <View style={styles.locationContainer}>
-        {location ? (
-          <>
-            <Text>
-              lat : {location.latitude}, long : {location.longitude}
-            </Text>
-            <MapPreview location={location} />
-          </>
-        ) : (
-          <Text>{error}</Text>
-        )}
-      </View>
+      <Text style={styles.text}>{address} </Text>
+      <MapPreview latitude={location.latitude} longitude={location.longitude} />
+      <AddButton title="Confirmar Localizacion" onPress={onConfirmAddress} />
     </View>
   );
-}
+};
+
+export default LocationSelector;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: "center",
-    justifyContent: "center",
-    paddingBottom: 130,
+    marginTop: 40,
+    gap: 20,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: "bold",
-    marginBottom: 10,
-  },
-  locationContainer: {
-    width: 200,
-    height: 100,
-    borderWidth: 2,
-    borderColor: colors.green3,
-    padding: 10,
-    justifyContent: "center",
-    alignItems: "center",
+  text: {
+    fontSize: 16,
   },
 });
