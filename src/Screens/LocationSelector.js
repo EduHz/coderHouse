@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import AddButton from "../Components/AddButton";
 import * as Location from "expo-location";
 import MapPreview from "../Components/MapPreview";
-import { googleApi } from "../firebase/db";
 import { usePostUserLocationMutation } from "../app/services/shopServices";
 import { useSelector } from "react-redux";
 
@@ -35,18 +34,24 @@ const LocationSelector = ({ navigation }) => {
   }, []);
 
   useEffect(() => {
+    // Implementación de geocodificación inversa
     (async () => {
       try {
         if (location.latitude !== null) {
-          const response = await fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.latitude},${location.longitude}&key=${googleApi.mapStatic}`
+          const reverseGeocodingResponse = await fetch(
+            // https://maps.googleapis.com/maps/api/geocode/json?latlng=19.4326,-99.1332&key=AIzaSyA4olL8zJhdV4NImTwKNha2ArZ7KybdiP8
+            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${location.latitude},${location.longitude}&key=AIzaSyA4olL8zJhdV4NImTwKNha2ArZ7KybdiP8`
           );
 
-          const data = await response.json();
-          setAddress(data.results[0].formatted_address);
+          const reverseGeocodingData = await reverseGeocodingResponse.json();
+          const formattedAddress =
+            reverseGeocodingData.results[0]?.formatted_address ||
+            "Dirección desconocida";
+
+          setAddress(formattedAddress);
         }
       } catch (error) {
-        setErrorMsg(error.message);
+        console.error("Error en la geocodificación inversa:", error.message);
       }
     })();
   }, [location]);
@@ -71,7 +76,10 @@ const LocationSelector = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.text}>{address} </Text>
+      <Text style={styles.text}>
+        {address}
+        {/* Lat: {location.latitude}, Long: {location.longitude} */}
+      </Text>
       <MapPreview latitude={location.latitude} longitude={location.longitude} />
       <AddButton title="Confirmar Localizacion" onPress={onConfirmAddress} />
     </View>
@@ -87,6 +95,7 @@ const styles = StyleSheet.create({
     gap: 20,
   },
   text: {
+    textAlign: "center",
     fontSize: 16,
   },
 });
