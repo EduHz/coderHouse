@@ -11,7 +11,7 @@ const AuthStack = () => {
       initialRouteName="Signup"
       screenOptions={({ route }) => {
         return {
-          header: () => <Header title="Bienvenido" />,
+          header: () => <Header title="Welcome" />,
         };
       }}
     >

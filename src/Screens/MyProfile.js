@@ -3,6 +3,7 @@ import { StyleSheet, View, Image } from "react-native";
 import AddButton from "../Components/AddButton";
 import { useGetProfileImageQuery } from "../app/services/shopServices";
 import { useSelector } from "react-redux";
+import { colors } from "../Global/colors";
 
 export default function MyProfile({ navigation }) {
   const localId = useSelector((state) => state.auth.value.localId);
@@ -35,10 +36,11 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   profileImage: {
-    width: 200,
-    height: 200,
-    borderRadius: 100, // Hace que la imagen sea circular
-    borderWidth: 2, // Añade un borde de 2 puntos
-    borderColor: "#fff", // Color del borde
+    width: 150,
+    height: 150,
+    borderRadius: 75, // Hace que la imagen sea circular
+    borderWidth: 3, // Aumentado el ancho del borde a 3 puntos
+    borderColor: colors.blue2, // Cambiado el color del borde a azul
+    marginBottom: 20, // Añadido un margen inferior para separar la imagen de los botones
   },
 });

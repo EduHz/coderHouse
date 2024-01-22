@@ -25,7 +25,7 @@ export default OrderItem;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.lightGray,
+    backgroundColor: colors.white,
     margin: 10,
     padding: 10,
     height: 100,
@@ -36,16 +36,16 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   textContainer: {
-    width: "70",
-    gap: 5,
+    width: "70%",
+    marginBottom: 5,
   },
   text1: {
-    fontSize: 19,
+    fontSize: 15,
     fontWeight: "bold",
     fontFamily: "Josefin",
   },
   text2: {
-    fontSize: 17,
+    fontSize: 15,
     fontFamily: "Josefin",
   },
 });

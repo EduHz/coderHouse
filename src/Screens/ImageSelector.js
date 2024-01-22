@@ -24,7 +24,7 @@ const ImageSelector = ({ navigation }) => {
       let result = await ImagePicker.launchCameraAsync({
         mediaTypes: ImagePicker.MediaTypeOptions.Images,
         allowsEditing: true,
-        aspect: [4, 3],
+        aspect: [4, 4],
         quality: 0.3,
         base64: true,
       });
@@ -34,6 +34,7 @@ const ImageSelector = ({ navigation }) => {
       }
     }
   };
+
   const confirmImage = () => {
     triggerProfileImage({ localId, image });
     navigation.goBack();
@@ -54,7 +55,7 @@ const ImageSelector = ({ navigation }) => {
       ) : (
         <>
           <View style={styles.noPhotoContainer}>
-            <Text>No photo to show</Text>
+            <Text style={styles.noPhotoText}>No photo to show</Text>
           </View>
           <AddButton title={"Take a photo"} onPress={pickImage} />
         </>
@@ -75,14 +76,20 @@ const styles = StyleSheet.create({
   image: {
     width: 200,
     height: 200,
+    borderRadius: 10, // Añadido un borde redondeado
+    marginBottom: 10, // Espaciado inferior
   },
   noPhotoContainer: {
     width: 200,
     height: 200,
     borderWidth: 2,
-    borderColor: colors.green3,
+    borderColor: colors.blue2, // Cambiado el color del borde
     padding: 10,
     justifyContent: "center",
     alignItems: "center",
+    borderRadius: 10, // Añadido un borde redondeado
+  },
+  noPhotoText: {
+    textAlign: "center",
   },
 });

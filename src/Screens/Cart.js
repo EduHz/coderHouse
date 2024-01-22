@@ -16,7 +16,7 @@ const Cart = () => {
       />
       <View style={styles.confirmContainer}>
         <Pressable onPress={() => triggerPostOrder(cart)}>
-          <Text style={styles.text}>Confirmar</Text>
+          <Text style={styles.text}>Confirm</Text>
         </Pressable>
         <Text style={styles.text}>Total: $ {cart.total} </Text>
       </View>

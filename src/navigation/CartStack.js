@@ -10,7 +10,7 @@ const CartStack = () => {
       initialRouteName="Cart"
       screenOptions={({ route }) => {
         return {
-          header: () => <Header title="Carrito" />,
+          header: () => <Header title="Cart" />,
         };
       }}
     >

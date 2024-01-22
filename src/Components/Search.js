@@ -1,3 +1,4 @@
+// Search.js
 import { StyleSheet, View, Pressable, TextInput, Text } from "react-native";
 import { colors } from "../Global/colors";
 import { AntDesign, Entypo } from "@expo/vector-icons";
@@ -7,14 +8,15 @@ const Search = ({ setKeyword }) => {
   const [input, setInput] = useState("");
   const [error, setError] = useState("");
 
-  const seach = () => {
+  const search = () => {
     const expression = /.*[0-9].*/;
     if (expression.test(input)) {
-      setError("no debe contener numeros");
+      setError("No debe contener números");
     } else {
       setKeyword(input);
     }
   };
+
   const removeItem = () => {
     setInput("");
     setError("");
@@ -29,11 +31,11 @@ const Search = ({ setKeyword }) => {
           value={input}
           onChangeText={(t) => setInput(t)}
         />
-        <Pressable onPress={seach}>
-          <AntDesign name="search1" color="black" size={25} />
+        <Pressable onPress={search}>
+          <AntDesign name="search1" color={colors.black} size={25} />
         </Pressable>
         <Pressable onPress={removeItem}>
-          <Entypo name="circle-with-cross" color="black" size={25} />
+          <Entypo name="circle-with-cross" color={colors.black} size={25} />
         </Pressable>
       </View>
       {error ? <Text style={styles.errorInput}>{error}</Text> : null}
@@ -45,7 +47,7 @@ export default Search;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.green1,
+    backgroundColor: colors.blue2, // Cambiado a un tono de azul
     width: "100%",
   },
   containerInput: {
@@ -55,8 +57,8 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   input: {
-    backgroundColor: colors.green2,
-    width: "75%",
+    backgroundColor: colors.white, // Cambiado a blanco
+    flex: 1,
     borderWidth: 2,
     borderRadius: 5,
     paddingHorizontal: 10,
@@ -64,7 +66,7 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   errorInput: {
-    color: "red",
+    color: colors.red, // Cambiado a rojo
     paddingHorizontal: 10,
   },
 });

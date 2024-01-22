@@ -10,7 +10,7 @@ const OrdersStack = () => {
       initialRouteName="Orders"
       screenOptions={({ route }) => {
         return {
-          header: () => <Header title="Ordenes" />,
+          header: () => <Header title="Orders" />,
         };
       }}
     >

@@ -1,12 +1,21 @@
+// TabIcon.js
 import { StyleSheet, Text, View } from "react-native";
 import { Entypo } from "@expo/vector-icons";
+import { colors } from "../Global/colors";
 
 const TabIcon = ({ icon, label, focused }) => {
   return (
     <View style={styles.container}>
-      <Entypo name={icon} size={40} color={focused ? "white" : "#EEE"} />
+      <Entypo
+        name={icon}
+        size={40}
+        color={focused ? colors.white : "#7E89C4"}
+      />
       <Text
-        style={{ ...styles.text, ...{ color: focused ? "white" : "#EEE" } }}
+        style={{
+          ...styles.text,
+          color: focused ? colors.white : colors.lightGray,
+        }}
       >
         {label}
       </Text>
@@ -21,7 +30,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   text: {
-    color: "white",
+    color: colors.white,
     textAlign: "center",
   },
 });

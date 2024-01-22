@@ -16,10 +16,10 @@ const ShopStack = () => {
             <Header
               title={
                 route.name === "Home"
-                  ? "Categorias"
+                  ? "Categories"
                   : route.name === "Category"
                   ? route.params.category
-                  : "Detalle"
+                  : "Detail"
               }
             />
           ),

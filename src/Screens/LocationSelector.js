@@ -81,7 +81,7 @@ const LocationSelector = ({ navigation }) => {
         {/* Lat: {location.latitude}, Long: {location.longitude} */}
       </Text>
       <MapPreview latitude={location.latitude} longitude={location.longitude} />
-      <AddButton title="Confirmar Localizacion" onPress={onConfirmAddress} />
+      <AddButton title="Confirm Location" onPress={onConfirmAddress} />
     </View>
   );
 };

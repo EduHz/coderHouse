@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Pressable } from "react-native";
 import { colors } from "../Global/colors";
 import InputForm from "../Components/InputForm";
@@ -9,17 +9,25 @@ import { setUser } from "../features/auth/authSlice";
 
 const Login = ({ navigation }) => {
   const dispatch = useDispatch();
+  const [errorText, setErrorText] = useState(""); // Nuevo estado para el mensaje de error
   const [triggerLogin, { data, isError, isSuccess, error, isLoading }] =
     useLoginMutation();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   useEffect(() => {
-    if (isSuccess) dispatch(setUser(data));
-    if (isError) console.log(error);
+    if (isSuccess) {
+      dispatch(setUser(data));
+    }
+    if (isError) {
+      console.log(error);
+      // Actualizar el estado de errorText con el mensaje apropiado
+      setErrorText(error?.data?.message || "An unexpected error occurred");
+    }
   }, [data, isError, isSuccess]);
 
   const onSubmit = () => {
+    setErrorText(""); // Limpiar el mensaje de error antes de intentar iniciar sesión nuevamente
     triggerLogin({ email, password });
   };
 
@@ -42,6 +50,10 @@ const Login = ({ navigation }) => {
           error=""
         />
         <SubmitButton onPress={onSubmit} title="Login" />
+
+        {/* Mostrar el mensaje de error si hay uno */}
+        {errorText !== "" && <Text style={styles.errorText}>{errorText}</Text>}
+
         <Text style={styles.sub}>Don't have an account?</Text>
         <Pressable onPress={() => navigation.navigate("Signup")}>
           <Text style={styles.subLink}>Sign up</Text>
@@ -58,11 +70,11 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: colors.lightGray, // Set a light background color
+    backgroundColor: colors.lightGray,
   },
   container: {
-    width: "80%", // Adjusted width for better spacing
-    backgroundColor: colors.white, // Set a white background color
+    width: "80%",
+    backgroundColor: colors.white,
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
@@ -89,7 +101,13 @@ const styles = StyleSheet.create({
   subLink: {
     fontSize: 16,
     fontFamily: "Josefin",
-    color: colors.blue, // Set a different color
+    color: colors.blue,
     marginTop: 5,
+  },
+  errorText: {
+    color: "red",
+    fontSize: 16,
+    fontFamily: "Josefin",
+    marginTop: 10,
   },
 });

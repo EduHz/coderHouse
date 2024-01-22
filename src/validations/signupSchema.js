@@ -1,11 +1,11 @@
 import { object, string, ref } from "yup";
 
 export const signupSchema = object({
-  email: string().email("Ingrese un mail valido").required("Ingrese un mail"),
+  email: string().email("Enter a valid email").required("Enter an email"),
   password: string()
-    .min(6, "minimo 6 caracteres")
-    .required("Ingrese un password"),
+    .min(6, "Minimum 6 characters")
+    .required("Enter a password"),
   confirmPassword: string()
-    .oneOf([ref("password")], "los password no son iguales")
-    .required("vuelva a ingresar el mail"),
+    .oneOf([ref("password")], "Passwords do not match")
+    .required("Please re-enter the email"),
 });

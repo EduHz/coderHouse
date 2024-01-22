@@ -23,7 +23,7 @@ const TabNavigator = () => {
         component={ShopStack}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon icon="shop" label="Productos" focused={focused} />
+            <TabIcon icon="shop" label="Products" focused={focused} />
           ),
         }}
       />
@@ -32,7 +32,7 @@ const TabNavigator = () => {
         component={CartStack}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon icon="shopping-cart" label="Carrito" focused={focused} />
+            <TabIcon icon="shopping-cart" label="Cart" focused={focused} />
           ),
         }}
       />
@@ -41,7 +41,7 @@ const TabNavigator = () => {
         component={OrdersStack}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon icon="list" label="Ordenes" focused={focused} />
+            <TabIcon icon="list" label="Orders" focused={focused} />
           ),
         }}
       />
@@ -50,7 +50,7 @@ const TabNavigator = () => {
         component={ProfileStack}
         options={{
           tabBarIcon: ({ focused }) => (
-            <TabIcon icon="user" label="Perfil" focused={focused} />
+            <TabIcon icon="user" label="Profile" focused={focused} />
           ),
         }}
       />
@@ -62,7 +62,7 @@ export default TabNavigator;
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: colors.green3,
+    backgroundColor: colors.blue2, // Cambiado a un tono de azul
     elevation: 4,
     position: "absolute",
     bottom: 25,

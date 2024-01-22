@@ -8,11 +8,11 @@ const CartItem = ({ item }) => {
       <View style={styles.textContainer}>
         <Text style={styles.text1}>{item.title}</Text>
         <Text style={styles.text2}>{item.brand}</Text>
-        <Text style={styles.text2}>
-          Cantidad: {item.quantity} Precio $ {item.price}
+        <Text style={styles.text3}>
+          Quantity: {item.quantity} | Price: $ {item.price}
         </Text>
       </View>
-      <Entypo name="trash" size={25} color="black" />
+      <Entypo name="trash" size={25} color={colors.black} />
     </View>
   );
 };
@@ -21,7 +21,7 @@ export default CartItem;
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: colors.green3,
+    backgroundColor: colors.blue2,
     margin: 10,
     padding: 10,
     height: 100,
@@ -32,17 +32,22 @@ const styles = StyleSheet.create({
     borderWidth: 2,
   },
   textContainer: {
-    width: "70",
+    width: "70%",
     gap: 5,
   },
   text1: {
-    fontSize: 19,
-    color: colors.lightGray,
+    fontSize: 16, // Ajustado el tamaño de la fuente
+    color: colors.white,
     fontFamily: "Josefin",
   },
   text2: {
-    fontSize: 17,
-    color: colors.lightGray,
+    fontSize: 14, // Ajustado el tamaño de la fuente
+    color: colors.white,
+    fontFamily: "Josefin",
+  },
+  text3: {
+    fontSize: 12, // Ajustado el tamaño de la fuente
+    color: colors.white,
     fontFamily: "Josefin",
   },
 });

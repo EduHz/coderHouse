@@ -28,7 +28,7 @@ const ItemDetail = ({ route }) => {
             style={styles.buyNow}
             onPress={() => dispatch(addItem(product))}
           >
-            <Text style={styles.buyNowText}>Carrito</Text>
+            <Text style={styles.buyNowText}>Add to Cart</Text>
           </Pressable>
         </View>
       </View>

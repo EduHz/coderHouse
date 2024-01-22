@@ -12,7 +12,7 @@ const ProfileStack = () => {
       initialRouteName="MyProfile"
       screenOptions={({ route }) => {
         return {
-          header: () => <Header title="Perfil" />,
+          header: () => <Header title="Profile" />,
         };
       }}
     >
