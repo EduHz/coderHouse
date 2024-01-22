@@ -73,8 +73,8 @@ const Signup = ({ navigation }) => {
           isSecure={true}
           error={confirmPasswordError}
         />
-        <SubmitButton title="Send" onPress={onSubmit} />
-        <Text style={styles.sub}>Alredy have an account?</Text>
+        <SubmitButton title="Sign up" onPress={onSubmit} />
+        <Text style={styles.sub}>Already have an account?</Text>
         <Pressable onPress={() => navigation.navigate("Login")}>
           <Text style={styles.subLink}>Login</Text>
         </Pressable>
@@ -90,27 +90,38 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: colors.lightGray, // Utiliza un fondo claro similar al de Login
   },
   container: {
-    width: "90%",
-    backgroundColor: colors.green1,
-    gap: 15,
+    width: "80%", // Ajusta el ancho para mejor espaciado
+    backgroundColor: colors.white, // Fondo blanco para un diseño minimalista
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
     paddingVertical: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   title: {
-    fontSize: 22,
+    fontSize: 24,
     fontFamily: "Lobster",
+    marginBottom: 10,
   },
   sub: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: "Josefin",
+    marginTop: 10,
   },
   subLink: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: "Josefin",
-    color: "blue",
+    color: colors.blue, // Utiliza un color similar al de Login
+    marginTop: 5,
   },
 });

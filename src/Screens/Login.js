@@ -22,10 +22,11 @@ const Login = ({ navigation }) => {
   const onSubmit = () => {
     triggerLogin({ email, password });
   };
+
   return (
     <View style={styles.main}>
       <View style={styles.container}>
-        <Text style={styles.title}>Login to start</Text>
+        <Text style={styles.title}>Login</Text>
         <InputForm
           label="Email"
           value={email}
@@ -40,8 +41,8 @@ const Login = ({ navigation }) => {
           isSecure={true}
           error=""
         />
-        <SubmitButton onPress={onSubmit} title="Send" />
-        <Text style={styles.sub}>Not have an account?</Text>
+        <SubmitButton onPress={onSubmit} title="Login" />
+        <Text style={styles.sub}>Don't have an account?</Text>
         <Pressable onPress={() => navigation.navigate("Signup")}>
           <Text style={styles.subLink}>Sign up</Text>
         </Pressable>
@@ -57,27 +58,38 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: colors.lightGray, // Set a light background color
   },
   container: {
-    width: "90%",
-    backgroundColor: colors.green1,
-    gap: 15,
+    width: "80%", // Adjusted width for better spacing
+    backgroundColor: colors.white, // Set a white background color
     borderRadius: 10,
     justifyContent: "center",
     alignItems: "center",
     paddingVertical: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   title: {
-    fontSize: 22,
+    fontSize: 24,
     fontFamily: "Lobster",
+    marginBottom: 10,
   },
   sub: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: "Josefin",
+    marginTop: 10,
   },
   subLink: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: "Josefin",
-    color: "blue",
+    color: colors.blue, // Set a different color
+    marginTop: 5,
   },
 });
